@@ -21,7 +21,7 @@
 - The chance formula: `(percent - 150) / 100` — at 250%, it's guaranteed!
 - Star KO'd entities are launched **straight into the sky** with Levitation 50, phasing through blocks until they reach Y=320 where they're eliminated
 - Massive **explosion particles**, **firework bursts**, **end rod trails**, and a **shockwave ring** of cloud particles erupt on impact
-- **Customizable Audio**: Star KOs use explosive default Minecraft sounds. However, you can add a custom sound effect (like the Smash Bros 'ding') using a Resource Pack! Just place your `.ogg` audio file at `assets/smashcraft/sounds/star_ko.ogg`.
+- **Customizable Audio**: Star KOs use explosive default Minecraft sounds. However, you can add a custom sound effect (like the Smash Bros 'ding') using a Resource Pack! Include an `assets/smashcraft/sounds.json` in your pack pointing to your custom `.ogg` audio file.
 - The attacker gets knocked back from the sheer force of the impact
 - **Damage Scaling**: Launch speed, explosion size, crater size, and attacker recoil all scale with the weapon's damage!
 

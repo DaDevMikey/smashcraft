@@ -2,7 +2,10 @@
   "star_ko": {
     "category": "player",
     "sounds": [
-      "smashcraft:star_ko"
+      {
+        "name": "minecraft:entity/firework_rocket/large_blast",
+        "type": "event"
+      }
     ]
   }
 }
