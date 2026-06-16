@@ -179,7 +179,7 @@ The mod must be installed on **both the server and all clients** for full functi
 
 ## 📜 License
 
-This project is licensed under **CC0-1.0** — feel free to learn from it and have fun!
+This project is licensed under the **GNU General Public License v3.0** — see the `LICENSE` file for details.
 
 ---
 
