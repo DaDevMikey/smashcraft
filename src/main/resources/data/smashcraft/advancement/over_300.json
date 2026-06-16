@@ -1,0 +1,19 @@
+{
+  "parent": "smashcraft:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:golden_sword"
+    },
+    "title": "It's Over 300!",
+    "description": "Get an entity's percentage above 300%",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

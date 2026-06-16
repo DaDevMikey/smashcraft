@@ -1,0 +1,19 @@
+{
+  "parent": "smashcraft:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:obsidian"
+    },
+    "title": "Invincible",
+    "description": "Block a massive hit using your Smash Shield",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

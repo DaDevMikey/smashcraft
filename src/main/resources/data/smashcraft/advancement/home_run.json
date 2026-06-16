@@ -1,0 +1,19 @@
+{
+  "parent": "smashcraft:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:diamond_sword"
+    },
+    "title": "Home Run",
+    "description": "Land a fully charged Smash Attack",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

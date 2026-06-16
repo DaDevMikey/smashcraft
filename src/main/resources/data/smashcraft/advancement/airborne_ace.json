@@ -1,0 +1,19 @@
+{
+  "parent": "smashcraft:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:feather"
+    },
+    "title": "Airborne Ace",
+    "description": "Perform a Double Jump to recover",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

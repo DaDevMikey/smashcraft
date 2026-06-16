@@ -1,0 +1,19 @@
+{
+  "parent": "smashcraft:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:shield"
+    },
+    "title": "Shield Breaker",
+    "description": "Break an opponent's Smash Shield",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
