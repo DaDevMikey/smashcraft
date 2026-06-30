@@ -42,6 +42,7 @@ public class SmashCraft implements ModInitializer {
     public static final SoundEvent STAR_KO_SOUND = SoundEvent.createVariableRangeEvent(STAR_KO_ID);
 
     public static final Set<UUID> hasDoubleJumped = new HashSet<>();
+    public static final Set<UUID> hasLedgeGrabbed = new HashSet<>();
 
     public static final EntityType<SmashBallEntity> SMASH_BALL = Registry.register(
             BuiltInRegistries.ENTITY_TYPE,

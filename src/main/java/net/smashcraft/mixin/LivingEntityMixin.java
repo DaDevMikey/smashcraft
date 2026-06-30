@@ -325,22 +325,23 @@ public abstract class LivingEntityMixin extends Entity {
             if (!SmashStateManager.isShielding(this)) {
                 float shield = SmashStateManager.getShieldHealth(this);
                 if (shield < 100) {
-                    SmashStateManager.setShieldHealth(this, Math.min(100, shield + 0.5f));
+                    // Update locally without network sync — sync periodically below
+                    SmashStateManager.setShieldHealthLocal(this, Math.min(100, shield + 0.5f));
                 }
             } else {
                 float shield = SmashStateManager.getShieldHealth(this);
-                SmashStateManager.setShieldHealth(this, shield - 0.2f);
+                // Update locally without network sync — sync periodically below
+                SmashStateManager.setShieldHealthLocal(this, shield - 0.2f);
                 
-                // Spawn visual shield particles
-                if (this.level() instanceof ServerLevel serverLevel) {
+                // Spawn visual shield particles (reduced count for performance)
+                if (this.level() instanceof ServerLevel serverLevel && this.tickCount % 2 == 0) {
                     double radius = this.getBbWidth();
-                    double yOffset = this.getBbHeight() / 2.0;
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 3; i++) {
                         double angle = Math.random() * 2 * Math.PI;
-                        double x = this.getX() + Math.cos(angle) * radius;
-                        double z = this.getZ() + Math.sin(angle) * radius;
-                        double y = this.getY() + Math.random() * this.getBbHeight();
-                        serverLevel.sendParticles(new net.minecraft.core.particles.DustParticleOptions(0x3399FF, 1.5f), x, y, z, 1, 0.0, 0.0, 0.0, 0.0);
+                        double px = this.getX() + Math.cos(angle) * radius;
+                        double pz = this.getZ() + Math.sin(angle) * radius;
+                        double py = this.getY() + Math.random() * this.getBbHeight();
+                        serverLevel.sendParticles(new net.minecraft.core.particles.DustParticleOptions(0x3399FF, 1.5f), px, py, pz, 1, 0.0, 0.0, 0.0, 0.0);
                     }
                 }
 
@@ -352,6 +353,11 @@ public abstract class LivingEntityMixin extends Entity {
                 }
             }
 
+            // Periodic shield state sync — every 20 ticks (1 second) instead of every tick
+            if (this.tickCount % 20 == 0 && (SmashStateManager.isShielding(this) || SmashStateManager.getShieldHealth(this) < 100)) {
+                SmashStateManager.syncState(this);
+            }
+
             if (this.onGround()) {
                 if (SmashStateManager.isLaunched(this)) {
                     SmashStateManager.setLaunched(this, false);
@@ -359,6 +365,7 @@ public abstract class LivingEntityMixin extends Entity {
                 }
                 if ((Object) this instanceof Player) {
                     net.smashcraft.SmashCraft.hasDoubleJumped.remove(this.getUUID());
+                    net.smashcraft.SmashCraft.hasLedgeGrabbed.remove(this.getUUID());
                 }
             }
             // Handle freeze frames

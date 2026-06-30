@@ -109,6 +109,14 @@ public class SmashStateManager {
         syncState(entity);
     }
 
+    /**
+     * Updates shield health locally without triggering a network sync.
+     * Use this for per-tick updates where syncing every tick would be wasteful.
+     */
+    public static void setShieldHealthLocal(Entity entity, float health) {
+        shieldHealth.put(entity.getUUID(), health);
+    }
+
     public static void setSmashAttackReady(Entity entity, boolean ready) {
         if (ready) {
             smashAttackReady.add(entity.getUUID());

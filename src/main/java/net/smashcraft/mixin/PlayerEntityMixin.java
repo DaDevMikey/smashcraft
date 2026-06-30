@@ -45,7 +45,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                     if (this.isCrouching()) {
                         SmashStateManager.setLedgeGrabbing(this, false);
                     }
-                } else if (!this.onGround() && this.getDeltaMovement().y < -0.1 && this.horizontalCollision) {
+                } else if (!this.onGround() && this.getDeltaMovement().y < -0.1 && this.horizontalCollision && !net.smashcraft.SmashCraft.hasLedgeGrabbed.contains(this.getUUID())) {
                     // Check if we can grab a ledge
                     net.minecraft.core.Direction facing = this.getDirection();
                     net.minecraft.core.BlockPos pos = this.blockPosition();
@@ -60,6 +60,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                         
                         // We found a ledge! Snap to it.
                         SmashStateManager.setLedgeGrabbing(this, true);
+                        net.smashcraft.SmashCraft.hasLedgeGrabbed.add(this.getUUID());
+                        net.smashcraft.SmashCraft.hasDoubleJumped.remove(this.getUUID());
                         this.setDeltaMovement(0, 0, 0);
                         this.fallDistance = 0;
                         

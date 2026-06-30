@@ -1,6 +1,9 @@
 package net.smashcraft.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.smashcraft.SmashCraft;
+import net.smashcraft.client.renderer.SmashBallRenderer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -31,6 +34,7 @@ public class SmashCraftClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(SmashCraft.SMASH_BALL, SmashBallRenderer::new);
         jumpKey = new KeyMapping(
                 "key.smashcraft.jump",
                 InputConstants.Type.KEYSYM,
