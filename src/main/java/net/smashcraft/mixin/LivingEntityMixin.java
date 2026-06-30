@@ -54,14 +54,14 @@ public abstract class LivingEntityMixin extends Entity {
                 
                 Entity attacker = source.getEntity();
                 if (attacker instanceof ServerPlayer attackerPlayer) {
-                    ((ServerLevel) this.level()).getServer().getCommands().performPrefixedCommand(attackerPlayer.createCommandSourceStack(), "advancement grant @s only smashcraft:shield_breaker");
+                    net.smashcraft.SmashCraft.grantAdvancement(attackerPlayer, "shield_breaker");
                 }
             } else {
                 SmashStateManager.setShieldHealth(this, currentShield - shieldDamage);
                 this.level().playSound(null, this.blockPosition(), net.minecraft.sounds.SoundEvents.SHIELD_BLOCK.value(), net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 1.0f);
                 
                 if (amount >= 15 && (Object) this instanceof ServerPlayer serverPlayer) {
-                    ((ServerLevel) this.level()).getServer().getCommands().performPrefixedCommand(serverPlayer.createCommandSourceStack(), "advancement grant @s only smashcraft:invincible");
+                    net.smashcraft.SmashCraft.grantAdvancement(serverPlayer, "invincible");
                 }
                 cir.setReturnValue(false);
             }
@@ -90,9 +90,9 @@ public abstract class LivingEntityMixin extends Entity {
                 }
                 
                 if (playerAttacker instanceof ServerPlayer serverPlayer) {
-                    ((ServerLevel) this.level()).getServer().getCommands().performPrefixedCommand(serverPlayer.createCommandSourceStack(), "advancement grant @s only smashcraft:root");
+                    net.smashcraft.SmashCraft.grantAdvancement(serverPlayer, "root");
                     if (SmashStateManager.getPercent(this) + addedPercent >= 300) {
-                        ((ServerLevel) this.level()).getServer().getCommands().performPrefixedCommand(serverPlayer.createCommandSourceStack(), "advancement grant @s only smashcraft:over_300");
+                        net.smashcraft.SmashCraft.grantAdvancement(serverPlayer, "over_300");
                     }
                 }
             }
@@ -170,7 +170,7 @@ public abstract class LivingEntityMixin extends Entity {
                         hurtBy.hurtMarked = true;
                     }
                     if (hurtBy instanceof ServerPlayer serverPlayer) {
-                        ((ServerLevel) this.level()).getServer().getCommands().performPrefixedCommand(serverPlayer.createCommandSourceStack(), "advancement grant @s only smashcraft:star_ko");
+                        net.smashcraft.SmashCraft.grantAdvancement(serverPlayer, "star_ko");
                     }
                 }
                 
@@ -260,7 +260,7 @@ public abstract class LivingEntityMixin extends Entity {
                 }
                 
                 if (attacker instanceof ServerPlayer serverPlayer) {
-                    ((ServerLevel) this.level()).getServer().getCommands().performPrefixedCommand(serverPlayer.createCommandSourceStack(), "advancement grant @s only smashcraft:home_run");
+                    net.smashcraft.SmashCraft.grantAdvancement(serverPlayer, "home_run");
                 }
 
                 if (this.level() instanceof ServerLevel serverLevel) {

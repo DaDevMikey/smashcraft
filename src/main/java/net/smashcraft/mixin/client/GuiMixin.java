@@ -39,7 +39,21 @@ public class GuiMixin {
         int color = 0xFFFFFF;
         if (percent > 0) {
             float hue = Math.max(0, 120 - (percent / 300f) * 120);
-            color = java.awt.Color.HSBtoRGB(hue / 360f, 1.0f, 1.0f);
+            // Manual HSB to RGB (avoids java.awt which conflicts with LWJGL/fullscreen)
+            float h = hue / 60f;
+            int hi = (int) h % 6;
+            float f = h - hi;
+            int v = 255;
+            int q = (int) (255 * (1 - f));
+            int t = (int) (255 * f);
+            color = switch (hi) {
+                case 0 -> (v << 16) | (t << 8);
+                case 1 -> (q << 16) | (v << 8);
+                case 2 -> (v << 8) | t;
+                case 3 -> (v << 8) | (q << 16) | v;
+                case 4 -> (t << 16) | v;
+                default -> (v << 16) | q;
+            };
         }
 
         guiGraphicsExtractor.fill(x, y, x + barWidth, y + barHeight, 0x80000000);

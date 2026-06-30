@@ -59,6 +59,25 @@ public class SmashCraft implements ModInitializer {
     public static boolean RULE_SMASH_ATTACK = true;
     public static boolean RULE_DOUBLE_JUMP = true;
 
+    /**
+     * Grants an advancement to a player only if they don't already have it.
+     * Prevents chat spam from repeated grant attempts.
+     */
+    public static void grantAdvancement(net.minecraft.server.level.ServerPlayer player, String advancementId) {
+        if (!(player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel)) return;
+        net.minecraft.server.ServerAdvancementManager advManager = serverLevel.getServer().getAdvancements();
+        Identifier id = Identifier.fromNamespaceAndPath("smashcraft", advancementId);
+        net.minecraft.advancements.AdvancementHolder advancement = advManager.get(id);
+        if (advancement != null) {
+            net.minecraft.advancements.AdvancementProgress progress = player.getAdvancements().getOrStartProgress(advancement);
+            if (!progress.isDone()) {
+                for (String criterion : progress.getRemainingCriteria()) {
+                    player.getAdvancements().award(advancement, criterion);
+                }
+            }
+        }
+    }
+
     @Override
     public void onInitialize() {
         FabricDefaultAttributeRegistry.register(SMASH_BALL, SmashBallEntity.createAttributes());
@@ -105,7 +124,7 @@ public class SmashCraft implements ModInitializer {
                                 serverLevel.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.WOOL_FALL, net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 1.5f);
                             }
                             
-                            context.server().getCommands().performPrefixedCommand(player.createCommandSourceStack(), "advancement grant @s only smashcraft:airborne_ace");
+                            grantAdvancement(player, "airborne_ace");
                         }
                     } else {
                         player.sendSystemMessage(Component.literal("§cDouble Jump is disabled on this server."));
@@ -213,7 +232,7 @@ public class SmashCraft implements ModInitializer {
                                 }
                                 
                                 if (entity instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-                                    context.getSource().getServer().getCommands().performPrefixedCommand(serverPlayer.createCommandSourceStack(), "advancement grant @s only smashcraft:airborne_ace");
+                                    grantAdvancement(serverPlayer, "airborne_ace");
                                 }
                             } else {
                                 context.getSource().sendFailure(Component.literal("§cYou must be in the air to double jump, and can only do it once!"));
